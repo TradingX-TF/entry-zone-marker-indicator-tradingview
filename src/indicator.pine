@@ -1,0 +1,47 @@
+//@version=5
+indicator("Entry Zone Marker", overlay=true)
+
+// === ЛОНГ параметры ===
+entry_long     = input.float(14, "Лонг - точка входа", step=0.0001)
+volume_long    = input.float(2000, "Лонг - обьем позиции", step=0.0001)
+avg_volume_long = input.float(500, "Лонг - обьем усреднения", step=0.0001)
+avg_price_long  = input.float(10, "Лонг - Цена актива при усреднении", step=0.0001)
+show_deviation  = input.bool(false, "Показать линию девиации")
+deviation_long  = input.float(5, "Лонг - Процент отклонения", step=0.1)
+
+// === ШОРТ параметры ===
+entry_short     = input.float(14, "Шорт - точка входа", step=0.0001)
+volume_short    = input.float(1000, "Шорт - обьем позиции", step=0.0001)
+avg_volume_short = input.float(1000, "Шорт - обьем усреднения", step=0.0001)
+avg_price_short  = input.float(12, "Шорт - Цена актива при усреднении", step=0.0001)
+
+// === Расчёт для ЛОНГА ===
+total_vol_long = volume_long + avg_volume_long
+avg_entry_long = (entry_long * volume_long + avg_price_long * avg_volume_long) / total_vol_long 
+    
+
+// === Расчёт для ШОРТА ===
+total_vol_short = volume_short + avg_volume_short
+avg_entry_short = (entry_short * volume_short + avg_price_short * avg_volume_short) / total_vol_short 
+
+
+// === Горизонтальные уровни ===
+hline(avg_entry_long, "Long: New Avg Entry", color=color.green, linewidth=2)
+hline(avg_entry_short, "Short: New Avg Entry", color=color.red, linewidth=2)
+
+// === Расчёт уровня на 5% выше avg_entry_long ===
+level_above_long = avg_entry_long * (100-deviation_long)/100
+
+
+var line dev_line = na
+
+if show_deviation
+    if na(dev_line)
+        dev_line := line.new(x1=bar_index - 400, y1=level_above_long, x2=bar_index + 400, y2=level_above_long, color=color.rgb(13,197,74), width=1, style=line.style_solid)
+    else
+        line.set_xy1(dev_line, bar_index - 400, level_above_long)
+        line.set_xy2(dev_line, bar_index + 400, level_above_long)
+else
+    if not na(dev_line)
+        line.delete(dev_line)
+        dev_line := na
