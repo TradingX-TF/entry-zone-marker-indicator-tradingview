@@ -1,23 +1,21 @@
 # P&L Entry Zone Marker
 
-This indicator is a simple visual calculator for futures traders.
+This indicator is a simple visual calculator for futures traders. \
 It helps you track your long and short entry zones based on position size and average price.
 
-🔹 Green line – recalculated long entry after averaging down.
+🔹 Green line – recalculated long entry after averaging down. \
 🔹 Red line – short entry point.
 
-You can manually input your initial entry, volume, averaging volume, and averaging price.
+You can manually input your initial entry, volume, averaging volume, and averaging price. \
 The script calculates your new average entry for long positions and plots both lines as full horizontal levels across the chart.
 
 ✳️ Useful for:
 
-Visualizing break-even zones
+- Visualizing break-even zones
+- Planning P&L zones for hedged positions
+- Quickly aligning your trades with market structure
 
-Planning P&L zones for hedged positions
-
-Quickly aligning your trades with market structure
-
-✅ Clean version — no labels, just lines.
+✅ Clean version — no labels, just lines. \
 📉 Works on all symbols and timeframes.
 
 Developed by [@oleksandrgridin](https://github.com/oleksandrgridin) \
